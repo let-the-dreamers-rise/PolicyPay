@@ -1,0 +1,27 @@
+[package]
+name = "policypay"
+version = "0.1.0"
+description = "PolicyPay X — Programmable compliance and settlement protocol for institutional stablecoin payments"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "policypay"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+# Declared for Rust `check-cfg` / `unexpected_cfgs`: referenced by Anchor + Solana entrypoint macros
+# when expanded in this crate (see rustc warnings for `custom-heap`, `custom-panic`, `anchor-debug`).
+custom-heap = []
+custom-panic = []
+anchor-debug = []
+
+[dependencies]
+anchor-lang = "0.32.1"
+anchor-spl = "0.32.1"
+sha2 = "0.10"

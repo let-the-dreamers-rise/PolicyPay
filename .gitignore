@@ -1,0 +1,12 @@
+.env
+node_modules
+dist
+
+
+# Solana / Anchor
+contracts/target/
+contracts/target-native-check/
+test-ledger/
+
+# Keypairs / secrets
+compliance-issuer.json
