@@ -55,22 +55,65 @@ anchor deploy
 
 Note the deployed program ID for the backend `.env`.
 
+### `anchor deploy`: timeout *after* “Program confirmed on-chain”
+
+If you see **`operation timed out`** right after **Program confirmed on-chain**, the **deploy already succeeded**. Anchor (or the CLI) is doing another request to devnet and the **public RPC** (`https://api.devnet.solana.com`) is slow, rate-limited, or dropped your connection—common from WSL or busy networks.
+
+1. **Verify the program is there:**
+
+   ```bash
+   solana program show yourkey
+   ```
+
+   If this prints program details, you are done with deploy.
+
+2. **Reduce flakes next time:** point the CLI at a **sturdier devnet RPC** (Helius, QuickNode, Alchemy, etc.), then redeploy/upgrade as usual:
+
+   ```bash
+   solana config set --url https://devnet.helius-rpc.com/?api-key=YOUR_KEY
+   # or keep default and only set for Anchor:
+   export ANCHOR_PROVIDER_URL="https://devnet.helius-rpc.com/?api-key=YOUR_KEY"
+   ```
+
+3. **Retry** `anchor deploy` only if `program show` says the program is missing (rare if you saw “confirmed”).
+
 ---
 
 ## 2. Generate compliance issuer keypair
 
+This keypair **must match** the `compliance_issuer` pubkey you pass into `initialize_config` on-chain. The backend signs settlement txs as this issuer.
+
+From repo root (or any folder; adjust paths):
+
 ```bash
- 
+# Create a new keypair file (do NOT commit it — it is in .gitignore if named compliance-issuer.json at repo root)
+solana-keygen new -o compliance-issuer.json --no-bip39-passphrase
+
+# Fund it on devnet (tx fees). Use the pubkey printed above:
+solana airdrop 1 <COMPLIANCE_ISSUER_PUBKEY>
+# Or one step: solana airdrop 1 $(solana-keygen pubkey compliance-issuer.json)
 ```
 
-Export the base58 secret key for the backend env:
+Show the public key (for `initialize_config`):
 
 ```bash
-# Node one-liner to convert JSON keypair to base58
+solana-keygen pubkey compliance-issuer.json
+```
+
+Export the **base58 secret** for `COMPLIANCE_ISSUER_SECRET_KEY` in `backend/.env` (run from the directory that contains `compliance-issuer.json`):
+
+```bash
+cd /path/to/PolicyPay   # or contracts/, same folder as the json
 node -e "const bs58=require('bs58');const k=require('./compliance-issuer.json');console.log(bs58.encode(Buffer.from(k)))"
 ```
 
-Store the output as `COMPLIANCE_ISSUER_SECRET_KEY` in `backend/.env`.
+If `bs58` is missing: `npm install bs58` in a folder with `package.json`, or use `cd backend && node -e "..."` with `require('../compliance-issuer.json')` and `bs58` from backend deps.
+
+**`BACKEND_API_KEY`** (optional HTTP auth for `/api/*`): any random secret you choose, not a Solana key. Generate e.g.:
+
+```bash
+openssl rand -hex 32
+```
 
 ---
 
@@ -119,8 +162,8 @@ COMPLIANCE_ISSUER_SECRET_KEY=<base58 secret key>
 
 ```bash
 cd backend
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 Verify: `curl http://localhost:3000/health`

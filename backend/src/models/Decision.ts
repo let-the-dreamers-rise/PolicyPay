@@ -13,6 +13,8 @@ const decisionSchema = new Schema({
   payloadHash: { type: String, required: true },
   allowed: { type: Boolean, required: true },
   reason: { type: String, default: null },
+  /** Idempotent quote replay (optional). */
+  idempotencyKey: { type: String, sparse: true, unique: true },
   createdAt: { type: Date, default: Date.now },
 });
 

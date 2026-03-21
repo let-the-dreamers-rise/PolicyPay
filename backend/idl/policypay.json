@@ -1,0 +1,601 @@
+{
+  "address": "6R1i2wgpvEZXNVxYMdUqC4KKcAszacuZnGTaPSL6TruC",
+  "metadata": {
+    "name": "policypay",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "PolicyPay X — Programmable compliance and settlement protocol for institutional stablecoin payments"
+  },
+  "instructions": [
+    {
+      "name": "create_policy",
+      "discriminator": [
+        27,
+        81,
+        33,
+        27,
+        196,
+        103,
+        246,
+        53
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "policy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  108,
+                  105,
+                  99,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "institution"
+              },
+              {
+                "kind": "arg",
+                "path": "policy_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "institution",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "policy_id",
+          "type": "u64"
+        },
+        {
+          "name": "max_amount",
+          "type": "u64"
+        },
+        {
+          "name": "require_kyc",
+          "type": "bool"
+        },
+        {
+          "name": "aml_threshold",
+          "type": "u8"
+        },
+        {
+          "name": "blocked_countries",
+          "type": {
+            "array": [
+              "u8",
+              10
+            ]
+          }
+        },
+        {
+          "name": "travel_rule_required",
+          "type": "bool"
+        },
+        {
+          "name": "travel_rule_required_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_config",
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "compliance_issuer",
+          "type": "pubkey"
+        },
+        {
+          "name": "usdc_mint",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "settle_payment",
+      "discriminator": [
+        129,
+        7,
+        163,
+        250,
+        122,
+        226,
+        158,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "policy",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  108,
+                  105,
+                  99,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "policy.institution",
+                "account": "Policy"
+              },
+              {
+                "kind": "account",
+                "path": "policy.policy_id",
+                "account": "Policy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "compliance_issuer",
+          "signer": true
+        },
+        {
+          "name": "sender_owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sender_token_account",
+          "writable": true
+        },
+        {
+          "name": "recipient_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "sender_country",
+          "type": "u8"
+        },
+        {
+          "name": "receiver_country",
+          "type": "u8"
+        },
+        {
+          "name": "kyc_verified",
+          "type": "bool"
+        },
+        {
+          "name": "aml_score",
+          "type": "u8"
+        },
+        {
+          "name": "sender_vasp_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "receiver_vasp_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "travel_rule_fields_present",
+          "type": "bool"
+        },
+        {
+          "name": "travel_rule_payload_version",
+          "type": "u8"
+        },
+        {
+          "name": "payload_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "compliance_issuer",
+          "type": "pubkey"
+        },
+        {
+          "name": "usdc_mint",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Policy",
+      "discriminator": [
+        222,
+        135,
+        7,
+        163,
+        235,
+        177,
+        33,
+        68
+      ]
+    },
+    {
+      "name": "ProgramConfig",
+      "discriminator": [
+        196,
+        210,
+        90,
+        231,
+        144,
+        149,
+        140,
+        63
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ComplianceDecisionEvent",
+      "discriminator": [
+        64,
+        26,
+        60,
+        144,
+        77,
+        248,
+        74,
+        134
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnauthorizedIssuer",
+      "msg": "Unauthorized compliance issuer"
+    },
+    {
+      "code": 6001,
+      "name": "PayloadHashMismatch",
+      "msg": "Payload hash does not match computed hash"
+    },
+    {
+      "code": 6002,
+      "name": "AmountExceedsLimit",
+      "msg": "Amount exceeds policy maximum"
+    },
+    {
+      "code": 6003,
+      "name": "SenderCountryBlocked",
+      "msg": "Sender country is blocked"
+    },
+    {
+      "code": 6004,
+      "name": "ReceiverCountryBlocked",
+      "msg": "Receiver country is blocked"
+    },
+    {
+      "code": 6005,
+      "name": "KycNotVerified",
+      "msg": "KYC verification required but not provided"
+    },
+    {
+      "code": 6006,
+      "name": "AmlScoreExceedsThreshold",
+      "msg": "AML score exceeds policy threshold"
+    },
+    {
+      "code": 6007,
+      "name": "TravelRuleFieldsMissing",
+      "msg": "Travel Rule required fields missing"
+    },
+    {
+      "code": 6008,
+      "name": "TravelRuleSenderVaspMissing",
+      "msg": "Travel Rule sender VASP ID missing"
+    },
+    {
+      "code": 6009,
+      "name": "TravelRuleReceiverVaspMissing",
+      "msg": "Travel Rule receiver VASP ID missing"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidMint",
+      "msg": "Invalid token mint"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidTokenOwner",
+      "msg": "Token account owner mismatch"
+    }
+  ],
+  "types": [
+    {
+      "name": "ComplianceDecisionEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "policy",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "allowed",
+            "type": "bool"
+          },
+          {
+            "name": "kyc_verified",
+            "type": "bool"
+          },
+          {
+            "name": "aml_score",
+            "type": "u8"
+          },
+          {
+            "name": "sender_country",
+            "type": "u8"
+          },
+          {
+            "name": "receiver_country",
+            "type": "u8"
+          },
+          {
+            "name": "sender_vasp_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "receiver_vasp_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "payload_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Policy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "institution",
+            "type": "pubkey"
+          },
+          {
+            "name": "policy_id",
+            "type": "u64"
+          },
+          {
+            "name": "max_amount",
+            "type": "u64"
+          },
+          {
+            "name": "require_kyc",
+            "type": "bool"
+          },
+          {
+            "name": "aml_threshold",
+            "type": "u8"
+          },
+          {
+            "name": "blocked_countries",
+            "type": {
+              "array": [
+                "u8",
+                10
+              ]
+            }
+          },
+          {
+            "name": "travel_rule_required",
+            "type": "bool"
+          },
+          {
+            "name": "travel_rule_required_amount",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProgramConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "compliance_issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "usdc_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

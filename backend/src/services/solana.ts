@@ -11,6 +11,25 @@ let _provider: AnchorProvider | null = null;
 let _program: Program<Idl> | null = null;
 let _issuerKeypair: Keypair | null = null;
 
+/** IDL is loaded as generic `Idl`; account client names are not inferred. */
+type PolicyAccountData = {
+  maxAmount: anchor.BN;
+  requireKyc: boolean;
+  amlThreshold: number;
+  blockedCountries: number[];
+  travelRuleRequired: boolean;
+  travelRuleRequiredAmount: anchor.BN;
+};
+
+function programAccounts(prog: Program<Idl>) {
+  return prog.account as unknown as {
+    programConfig: {
+      fetch: (pk: PublicKey) => Promise<{ usdcMint: PublicKey }>;
+    };
+    policy: { fetch: (pk: PublicKey) => Promise<PolicyAccountData> };
+  };
+}
+
 export function getComplianceIssuerKeypair(): Keypair {
   if (!_issuerKeypair) {
     const raw = config.COMPLIANCE_ISSUER_SECRET_KEY;
@@ -128,6 +147,36 @@ export async function createPolicyOnChain(params: {
     })
     .signers([params.institutionKeypair])
     .rpc();
+}
+
+export type OnChainPolicyAccount = {
+  maxAmount: number;
+  requireKyc: boolean;
+  amlThreshold: number;
+  blockedCountries: number[];
+  travelRuleRequired: boolean;
+  travelRuleRequiredAmount: number;
+};
+
+export async function fetchConfigUsdcMint(configPda: PublicKey): Promise<PublicKey> {
+  const prog = getProgram();
+  const cfg = await programAccounts(prog).programConfig.fetch(configPda);
+  return cfg.usdcMint;
+}
+
+export async function fetchPolicyAccountFromChain(
+  policyAddress: PublicKey,
+): Promise<OnChainPolicyAccount> {
+  const prog = getProgram();
+  const p = await programAccounts(prog).policy.fetch(policyAddress);
+  return {
+    maxAmount: p.maxAmount.toNumber(),
+    requireKyc: p.requireKyc,
+    amlThreshold: p.amlThreshold,
+    blockedCountries: [...p.blockedCountries],
+    travelRuleRequired: p.travelRuleRequired,
+    travelRuleRequiredAmount: p.travelRuleRequiredAmount.toNumber(),
+  };
 }
 
 export async function settlePaymentOnChain(params: {

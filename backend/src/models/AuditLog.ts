@@ -11,6 +11,8 @@ const auditLogSchema = new Schema({
   },
   inputSnapshot: { type: Schema.Types.Mixed, required: true },
   eventData: { type: Schema.Types.Mixed, default: null },
+  /** Cleared on failed execute so the same key can be retried; kept on confirmed for replay. */
+  idempotencyKey: { type: String, sparse: true, unique: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
