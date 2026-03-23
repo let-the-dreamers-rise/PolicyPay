@@ -46,6 +46,11 @@ Define AML policy evaluation strictly in the on-chain program.
 
 This keeps it deterministic and easy to demo: you can build two payments with `aml_score` values on either side of the threshold.
 
+### FX / risk label (informational, not enforced on-chain)
+In the MVP demo, the backend may also compute an off-chain `fxRiskLabel` (e.g. `LOW` / `MEDIUM` / `HIGH`) from market risk inputs (such as SIX MTLS data).
+
+Important: the Solana program **does not** take or enforce `fxRiskLabel` directly. The on-chain enforcement input is `aml_score` plus the other attestation fields that are bound to `payload_hash`.
+
 ## 4) Blocked countries semantics
 
 Policy parameter:

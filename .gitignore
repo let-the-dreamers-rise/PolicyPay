@@ -11,3 +11,7 @@ test-ledger/
 
 # Keypairs / secrets
 compliance-issuer.json
+
+# SIX / hackathon partner certificates + keys
+CH56655-api2026hack28/
+backend/CH56655-api2026hack28/

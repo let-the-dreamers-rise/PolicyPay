@@ -9,6 +9,7 @@ const decisionSchema = new Schema({
   receiverCountry: { type: Number, required: true },
   kycVerified: { type: Boolean, required: true },
   amlScore: { type: Number, required: true },
+  fxRiskLabel: { type: String, default: null },
   travelRuleFieldsPresent: { type: Boolean, required: true },
   payloadHash: { type: String, required: true },
   allowed: { type: Boolean, required: true },

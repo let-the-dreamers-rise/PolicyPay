@@ -81,4 +81,23 @@ export const config = {
 
   KYT_MAX_TX_PER_DAY: envInt("KYT_MAX_TX_PER_DAY", 1000),
   KYT_MAX_VOLUME_PER_DAY: envInt("KYT_MAX_VOLUME_PER_DAY", Number.MAX_SAFE_INTEGER),
+
+  /**
+   * SIX MTLS + FX data inputs for orchestrated fx/risk + aml/risk derivation.
+   *
+   * Solstice integration is responsible for failing fast if any of these
+   * are missing when orchestrated mode is used.
+   */
+  SIX_API_BASE_URL: process.env.SIX_API_BASE_URL?.trim() || "",
+  SIX_API_VERSION: process.env.SIX_API_VERSION?.trim() || "",
+  SIX_MTLS_CERT_PEM_PATH: process.env.SIX_MTLS_CERT_PEM_PATH?.trim() || "",
+  SIX_MTLS_KEY_PEM_PATH: process.env.SIX_MTLS_KEY_PEM_PATH?.trim() || "",
+  SIX_MTLS_CERT_PEM_BASE64: process.env.SIX_MTLS_CERT_PEM_BASE64?.trim() || "",
+  SIX_MTLS_KEY_PEM_BASE64: process.env.SIX_MTLS_KEY_PEM_BASE64?.trim() || "",
+  SIX_FX_SNAPSHOT_IDS: process.env.SIX_FX_SNAPSHOT_IDS?.trim() || "",
+
+  // Optional scoring parameters (when omitted, Solstice picks conservative defaults)
+  SIX_FX_RISK_HIGH_THRESHOLD: process.env.SIX_FX_RISK_HIGH_THRESHOLD?.trim() || "",
+  SIX_FX_RISK_MEDIUM_THRESHOLD:
+    process.env.SIX_FX_RISK_MEDIUM_THRESHOLD?.trim() || "",
 } as const;
