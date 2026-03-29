@@ -15,3 +15,7 @@ compliance-issuer.json
 # SIX / hackathon partner certificates + keys
 CH56655-api2026hack28/
 backend/CH56655-api2026hack28/
+
+# Local deployment artifacts
+.deploy/
+backend/*.log

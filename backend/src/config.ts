@@ -50,7 +50,8 @@ function resolveIdlPath(raw: string): string {
  */
 export const config = {
   PORT: requireEnvInt("PORT"),
-  MONGODB_URI: requireEnv("MONGODB_URI"),
+  MONGODB_URI:
+    process.env.MONGODB_URI?.trim() || "mongodb://127.0.0.1:27017/policypay",
   SOLANA_RPC_URL: requireEnv("SOLANA_RPC_URL"),
   PROGRAM_ID: requireEnv("PROGRAM_ID"),
   COMPLIANCE_ISSUER_SECRET_KEY: requireEnv("COMPLIANCE_ISSUER_SECRET_KEY"),
@@ -60,6 +61,7 @@ export const config = {
 
   USE_ONCHAIN_POLICY: envBool("USE_ONCHAIN_POLICY", false),
   USE_IN_MEMORY_MONGO: envBool("USE_IN_MEMORY_MONGO", false),
+  AUTO_SEED_LOCAL: envBool("AUTO_SEED_LOCAL", false),
 
   PARTNER_HTTP_TIMEOUT_MS: envInt("PARTNER_HTTP_TIMEOUT_MS", 15_000),
 

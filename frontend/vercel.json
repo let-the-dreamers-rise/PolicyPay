@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com/api/$1"
+    },
+    {
+      "source": "/health",
+      "destination": "http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com/health"
+    }
+  ]
+}

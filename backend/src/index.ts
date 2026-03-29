@@ -7,6 +7,7 @@ import policiesRouter from "./routes/policies";
 import paymentsRouter from "./routes/payments";
 import auditRouter from "./routes/audit";
 import demoRouter from "./routes/demo";
+import { seedLocalDataIfEmpty } from "./services/localSeed";
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.get("/health", (_req, res) => {
 
 async function main() {
   await connectDB();
+  if (config.AUTO_SEED_LOCAL) {
+    await seedLocalDataIfEmpty();
+  }
   app.listen(config.PORT, () => {
     console.log(`PolicyPay X backend listening on port ${config.PORT}`);
   });
