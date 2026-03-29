@@ -7,7 +7,6 @@ Institutional stablecoin payments need more than a wallet transfer. Banks, custo
 ## Live Demo
 
 - Frontend: [https://policypay-x-ashwin-goyals-projects.vercel.app](https://policypay-x-ashwin-goyals-projects.vercel.app)
-- Backend: [http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com](http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com)
 - Backend health: [http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com/health](http://policypayx-backend-20260329.us-east-1.elasticbeanstalk.com/health)
 
 ## Hackathon Fit
@@ -308,11 +307,3 @@ The realistic adoption story is:
 - deepen partner integrations for AMINA, Solstice, Keyrock, and Fireblocks
 - add stronger KYT graphing, velocity rules, and alerting
 - add institution authentication and role-based controls
-
-## Submission Checklist
-
-- [ ] add final team member names
-- [ ] add 2 minute walkthrough video link
-- [ ] add 2 to 3 minute pitch video link
-- [ ] attach screenshots or architecture slide if desired
-- [ ] confirm final demo environment and signer configuration before submission
