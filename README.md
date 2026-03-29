@@ -110,6 +110,30 @@ flowchart LR
 - partner integrations include real interface points and fallbacks so the product remains demoable without every external dependency being online
 - full institutional custody, HSM, and production auth hardening are not claimed as complete
 
+### Not institution-ready yet
+- signer flow is still hackathon-grade in parts and needs production-safe custody or delegated signing
+- live infrastructure should move from demo-safe fallback patterns to persistent managed data and secret management
+- audit truth should be rebuilt from chain events automatically, not only from application writes
+- KYT is present, but still needs velocity screening, wallet history, behavioral scoring, and alerting for a stronger institutional posture
+
+## Real vs Simulated
+
+This is the cleanest way to pitch the product:
+
+- **Real on Solana**
+  - policy creation
+  - payload-hash-based settlement gating
+  - quote-to-execute workflow
+  - transaction-linked audit inspection
+- **Hackathon abstraction around real institutional interfaces**
+  - some partner data paths
+  - fallback responses when external systems are unavailable
+  - demo-safe hosted backend configuration
+
+Short version for judges:
+
+> **Policy enforcement and settlement gating are real on Solana. Some institutional integrations are hackathon abstractions around real interface boundaries.**
+
 ## Technical Stack
 
 ### Smart contracts
@@ -246,6 +270,36 @@ PolicyPay X is strongest when presented honestly:
 - production custody, hardened signer management, and full event-indexed reconciliation are future work
 
 That is still a strong submission because the hardest part is already here: **turning compliance from an off-chain opinion into a settlement gate.**
+
+## Would Users Use This?
+
+**Honest answer:** not as a retail product today, and not as a bank production system tomorrow morning.
+
+But yes, **the right early users could absolutely care about this**:
+
+- crypto banks and custodians exploring controlled stablecoin payment rails
+- treasury and operations teams that need approval logic before stablecoin movement
+- stablecoin issuers or fintechs building institution-facing payment workflows
+- hackathon partners or pilot teams looking for a policy-enforced Solana payment control plane
+
+Why they would care:
+
+- it solves a real institutional pain point
+- it makes compliance part of execution, not just reporting
+- it gives a concrete interface between policy, settlement, and audit
+
+Why they would not adopt it yet without more work:
+
+- production signer security is not complete
+- KYT depth is not yet strong enough for institutional trust
+- managed persistence, auth, and observability still need hardening
+- some partner flows still need deeper live integration
+
+The realistic adoption story is:
+
+- **today:** strong hackathon MVP and pilot narrative
+- **next:** internal innovation pilot or design-partner trial
+- **later:** production candidate after infra, custody, KYT, and reconciliation are hardened
 
 ## Next Steps
 
