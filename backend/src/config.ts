@@ -59,6 +59,7 @@ export const config = {
   BACKEND_API_KEY: process.env.BACKEND_API_KEY?.trim() || "",
 
   USE_ONCHAIN_POLICY: envBool("USE_ONCHAIN_POLICY", false),
+  USE_IN_MEMORY_MONGO: envBool("USE_IN_MEMORY_MONGO", false),
 
   PARTNER_HTTP_TIMEOUT_MS: envInt("PARTNER_HTTP_TIMEOUT_MS", 15_000),
 

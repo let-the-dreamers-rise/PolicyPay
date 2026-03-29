@@ -1,0 +1,232 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dashboard-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.dashboard-hero-copy h2 {
+  margin: 0.25rem 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.dashboard-hero-copy p {
+  max-width: 44rem;
+  margin: 0.9rem 0 0;
+  color: var(--text-muted);
+}
+
+.protocol-lane {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.protocol-step {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
+}
+
+.protocol-step-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(202, 155, 87, 0.12);
+  color: var(--accent-strong);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.protocol-step h3 {
+  margin: 0.7rem 0 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.protocol-step p {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.dashboard-grid,
+.dashboard-grid-secondary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.dashboard-side-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-stack,
+.data-stack,
+.corridor-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.data-row,
+.partner-row,
+.corridor-row,
+.policy-strip {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.data-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.data-row-main,
+.data-row-meta,
+.policy-strip-head,
+.corridor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.data-row-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.data-row-title,
+.partner-name {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.data-row-subtitle,
+.partner-role {
+  margin: 0.18rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.partner-detail {
+  margin: 0.45rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.policy-strip-grid {
+  margin-top: 0.95rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.policy-strip-grid strong {
+  display: block;
+  margin-top: 0.28rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.corridor-count {
+  min-width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(202, 155, 87, 0.14);
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.timeline-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.timeline-card-label {
+  display: inline-block;
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.timeline-card strong {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--text-primary);
+}
+
+.timeline-card p {
+  margin: 0.45rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-hero,
+  .dashboard-grid,
+  .dashboard-grid-secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .data-row,
+  .data-row-main,
+  .data-row-meta,
+  .policy-strip-head,
+  .corridor-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .data-row-copy {
+    align-items: flex-start;
+  }
+
+  .policy-strip-grid,
+  .timeline-grid {
+    grid-template-columns: 1fr;
+  }
+}
